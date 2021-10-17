@@ -6,7 +6,9 @@ import requests, json
 
 bp = Blueprint('like', __name__, url_prefix='/api')
 
-# like 버튼 누르면 업데이트
+''' 
+like 버튼 누르면 업데이트
+'''
 @bp.route('/like',  methods=['PATCH'])
 @jwt_required()
 def like():
@@ -17,41 +19,47 @@ def like():
 
     user_id = get_jwt_identity()
 
-    if like == True: # 리스트에 있으면 추가 불가 중복 코드 작성
+    if like == True:
+        ''' 
+        리스트에 있으면 추가 불가 중복 코드 작성
+        '''
         if category == "movie":
-            is_potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
-            potato = Potato_Basket(user_id=user_id, movie_id=content_id)
+            potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
+            potato_basket = Potato_Basket(user_id=user_id, movie_id=content_id)
 
             movie = Movie.query.filter(Movie.id==content_id).first()
 
-            if movie and not is_potato:
+            if movie and not potato:
                 movie.like_count += 1
             if not movie:
                 abort(400,"해당하는 영화가 없습니다.")  
-            if is_potato:
+            if potato:
                 abort(400,"좋아요는 중복이 불가합니다.")  
 
             Movie.query.filter_by(id=content_id).update(
                 {'like_count': movie.like_count})
 
         if category == "tv":
-            is_potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.tv_id==content_id).first()
-            potato = Potato_Basket(user_id=user_id, tv_id=content_id)
+            potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.tv_id==content_id).first()
+            potato_basket = Potato_Basket(user_id=user_id, tv_id=content_id)
             tv = Tv.query.filter(Tv.id==content_id).first()
 
-            if tv and not is_potato:
+            if tv and not potato:
                 tv.like_count += 1
             if not tv:
                 abort(400,"해당하는 TV 프로그램이 없습니다.")  
-            if is_potato:
+            if potato:
                 abort(400,"좋아요는 중복이 불가합니다.")  
 
             Tv.query.filter_by(id=content_id).update(
                 {'like_count': tv.like_count})
             
-        db.session.add(potato)
+        db.session.add(potato_basket)
     
-    if like == False: # 리스트에 없으면 삭제 불가 코드 작성
+    if like == False:
+        ''' 
+        리스트에 없으면 삭제 불가 코드 작성
+        '''
         if category == "movie":
             potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
             movie = Movie.query.filter(Movie.id==content_id).first()
@@ -89,7 +97,9 @@ def like():
         db.session.rollback()
         abort(400,{'error': 'str(e)'} )
 
-# 숫자 리스트로 좋아요 누른 리스트 표시
+''' 
+숫자 리스트로 좋아요 누른 리스트 표시
+'''
 @bp.route('/like/list',  methods=['POST'])
 @jwt_required()
 def like_watch():

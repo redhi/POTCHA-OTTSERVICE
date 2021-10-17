@@ -1,7 +1,6 @@
 import csv
 from datetime import date, datetime
 from app import create_app
-
 app = create_app()
 app.app_context().push()
 from app import db
@@ -17,21 +16,21 @@ with open('movie_db_total_final.csv', 'r', encoding='UTF-8') as f:
         poster_path = f"https://image.tmdb.org/t/p/original{row['poster_path']}"
         
         movie = Movie(
-						title=row['title'], 
-                        poster_path=poster_path,
-                        overview=row['overview'],
-						release_date=release_date,
-                        runtime=int(row['runtime']),  
-						popularity=row['popularity'],
-                        origin_country=row['origin_country'], 
-						genres=row['genres_name'], 
-                        keywords = row['keywords_name'],
-                        like_count = 0,
-                        positive_comment = row['positive_comment'],
-                        negative_comment = row['negative_comment'],
-                        cast = row['cast'],
-                        director = row['director'],
-                        rank = int(row['rank'])
+				title=row['title'],
+                poster_path=poster_path,
+                overview=row['overview'],
+				release_date=release_date,
+                runtime=int(row['runtime']),
+				popularity=row['popularity'],
+                origin_country=row['origin_country'],
+				genres=row['genres_name'],
+                keywords = row['keywords_name'],
+                like_count = 0,
+                positive_comment = row['positive_comment'],
+                negative_comment = row['negative_comment'],
+                cast = row['cast'],
+                director = row['director'],
+                rank = int(row['rank'])
 					
         )
         print("gg",movie.poster_path)
@@ -59,21 +58,21 @@ with open('tv_db_total_final.csv', 'r', encoding='UTF-8') as f:
             runtime = None
         
         tv = Tv(
-						name=row['name'], 
-                        poster_path=poster_path,
-                        overview=row['overview'],
-						first_air_date=release_date,
-                        runtime=runtime,  
-						popularity=row['popularity'],
-                        origin_country=row['origin_country'], 
-						genres=row['genres_name'], 
-                        keywords = row['keywords_name'],
-                        like_count = 0,
-                        positive_comment = row['positive_comment'],
-                        negative_comment = row['negative_comment'],
-                        cast = row['cast'],
-                        director = row['director'],
-                        rank = int(row['rank'])
+				name=row['name'], 
+                poster_path=poster_path,
+                overview=row['overview'],
+				first_air_date=release_date,
+                runtime=runtime,
+				popularity=row['popularity'],
+                origin_country=row['origin_country'],
+				genres=row['genres_name'],
+                keywords = row['keywords_name'],
+                like_count = 0,
+                positive_comment = row['positive_comment'],
+                negative_comment = row['negative_comment'],
+                cast = row['cast'],
+                director = row['director'],
+                rank = int(row['rank'])
 					
         )
         print("gg",tv.poster_path)

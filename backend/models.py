@@ -3,7 +3,8 @@ from datetime import datetime
 
 # 사용자 정보
 class User(db.Model):
-    __tablename__   = 'user'
+    __tablename__   = 'USER'
+
     id = db.Column(db.Integer, primary_key=True,
                 nullable=False, autoincrement=True)
     email = db.Column(db.String(50),  nullable=False,unique=True)
@@ -11,7 +12,6 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
     photolink = db.Column(db.Text,nullable=False, default="./static/image/default.png")
     
-
     def __init__(self, email, nickname, password):
         self.email = email
         self.nickname = nickname
@@ -32,11 +32,13 @@ class User(db.Model):
 
 # 친구 정보
 class Friend(db.Model):
-    __tablename__ = 'friend'
+    __tablename__ = 'FRIEND'
+
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    nickname = db.Column(db.String(30), nullable=False, unique=True)
+    nickname = db.Column(db.String(30), nullable=False)
     photolink   = db.Column(db.String(255),nullable=False)
+
     def to_dict(self):
         return {
             'nickname': self.nickname,
@@ -45,7 +47,8 @@ class Friend(db.Model):
 
 # 영화 정보
 class Movie(db.Model):
-    __tablename__ = 'movie'
+    __tablename__ = 'MOVIE'
+
     id = db.Column(db.Integer, primary_key=True,
                 nullable=False, autoincrement=True)
     title = db.Column(db.String(255), nullable=False)
@@ -135,7 +138,8 @@ class Movie(db.Model):
 
 # TV 정보
 class Tv(db.Model):
-    __tablename__ = 'tv'
+    __tablename__ = 'TV'
+
     id = db.Column(db.Integer, primary_key=True,
                 nullable=False, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
@@ -225,7 +229,8 @@ class Tv(db.Model):
 
 # 감자 바구니(좋아요 리스트)
 class  Potato_Basket(db.Model):
-    __tablename__ = 'potato_basket'
+    __tablename__ = 'POTATO_BASKET'
+
     id = db.Column(db.Integer, primary_key=True,
                     nullable=False, autoincrement=True) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
