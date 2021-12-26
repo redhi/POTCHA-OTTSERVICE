@@ -6,6 +6,9 @@
 __pycache__
 ./backend/venv/
 ./backend/migrations/
-
-
+*.pyc
+__pycache__
 *.csv
+config.py
+backend/static/image
+

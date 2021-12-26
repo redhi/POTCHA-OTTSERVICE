@@ -1,16 +1,16 @@
-from flask import request, Blueprint, jsonify,abort
-from models import *
+from flask import Blueprint, abort, jsonify
 from flask_jwt_extended import *
-import requests, json
+from models import *
 
-bp = Blueprint('detail', __name__, url_prefix='/api')
+bp = Blueprint("detail", __name__, url_prefix="/api")
 
-@bp.route('/detail/<string:category>/<int:id>',  methods=['GET'])
+
+@bp.route("/detail/<string:category>/<int:id>", methods=["GET"])
 @jwt_required()
-def detail(category,id):
+def detail(category, id):
 
     user_id = get_jwt_identity()
-    potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id).all()
+    potato = Potato_Basket.query.filter(Potato_Basket.user_id == user_id).all()
 
     if category == "movie":
         movie = Movie.query.filter(Movie.id == id).first()
@@ -26,6 +26,5 @@ def detail(category,id):
     for likes in like_list:
         if likes == id:
             is_like = True
-            
-    print(content)
-    return jsonify({"content": content, "is_like" : is_like})
+
+    return jsonify({"content": content, "is_like": is_like})
